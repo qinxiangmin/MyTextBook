@@ -1,0 +1,126 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@model MyTextBook.Web.Models.StudentBookDetailses.StudentBookListViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/materialize.css" rel="stylesheet" />
+@using (Html.BeginForm("Index", "StudentBookDetailses", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-6">
+            学号: @Html.TextBox("StudentNum", ViewBag.NameStudentNum as string, new { @class = " dropdown-toggle form-control" })
+            班级:@Html.DropDownList("StudentClassId", new SelectList(ViewBag.StudentClass_value, "Value", "Text"), "--全部--", new { @class = "btn btn-success dropdown-toggle form-control" })
+        </div>
+        <div class="col-md-6">
+            学年:@Html.DropDownList("AcademicYear", new SelectList(ViewBag.NameAcademicYear_value, "Value", "Text"), new { @class = "btn btn-success dropdown-toggle form-control" })
+            学期:@Html.DropDownList("Semester", new SelectList(ViewBag.NameSemester_value, "Value", "Text"), new { @class = "btn btn-success dropdown-toggle form-control" })
+        </div>
+    </div>
+    <br />
+    <p>
+
+        <input type="submit" class="btn btn-info btn-block" value="搜索" />
+    </p>
+}
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    学生教材发放明细
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>班级</th>
+                            <th>学年</th>
+                            <th>学期</th>
+                            <th>学号</th>
+                            <th>姓名</th>
+                            <th>课程</th>
+                            <th>课程分类</th>
+                            <th>教材名称</th>
+                            <th>码详</th>
+                            <th>实详</th>
+                            <th>折扣</th>
+                            <th>合计</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.OnePageOfTasks)
+                        {
+                            <tr>
+                                <td>@item.StudentStudentClassStudentClassName</td>
+                                <td>@item.AcademicYear</td>
+                                <td>
+                                    @{
+                                        var xueqi = "秋季";
+                                        if (item.Semester == "1")
+                                        {
+                                            xueqi = "春季";
+                                        }
+                                    }
+                                    @xueqi
+                                </td>
+                                <td>@item.StudentStudentNum</td>
+                                <td>@item.StudentStudentName</td>
+                                <td>@item.CourseCourseName</td>
+                                <td>@item.CourseCourseTypeCourseTypeName</td>
+                                <td>@item.BookBookTitle</td>
+                                <td>@item.BookUnitPrice</td>
+                                <td>@item.UnitPrice</td>
+                                <td>
+                                    @{
+                                        var zhekou = Convert.ToInt32(item.UnitPrice / item.BookUnitPrice * 100);
+                                    }
+                                    @zhekou %
+                                </td>
+                                <td>XXX</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm("GetexelcAsync", "StudentBookDetailses", FormMethod.Get))
+{   
+    <input type="hidden" name="studentNum" value="@ViewBag.NameStudentNum" />
+    <input type="hidden" name="studentClassId" value="@ViewBag.NameStudentClassId" />
+    <input type="hidden" name="academicYear" value="@ViewBag.NameAcademicYear" />
+    <input type="hidden" name="semester" value="@ViewBag.NameSemester" />
+    <p>
+        <input type="submit" class="btn btn-info" value="导出Excel" />
+    </p>
+}
+
+<footer class="navbar-fixed-bottom">
+    <div class="container">
+        <center>
+            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfTasks,
+            page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter,
+            sortOrder = ViewBag.NameSortParm, AcademicYear = ViewBag.NameAcademicYear,
+            Semester = ViewBag.NameSemester,
+            StudentClassId = ViewBag.NameStudentClassId,
+            StudentNum = ViewBag.NameStudentNum
+            }))
+        </center>
+    </div>
+</footer>

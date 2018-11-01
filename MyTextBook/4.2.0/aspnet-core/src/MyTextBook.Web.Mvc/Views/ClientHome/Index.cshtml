@@ -1,0 +1,41 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+<div class="container">
+    @using (Html.BeginForm("Index", "ClientHome", FormMethod.Get))
+    {
+       
+        <div class="input-group">
+            <input type="text" onkeyup="ajaxPost();" name="SeachText" class="form-control" value="@ViewBag.CurrentFilter" placeholder="输入搜索书籍">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    搜索
+                </button>
+            </span>
+        </div><!-- /input-group -->
+    }
+
+    <div class="row">
+        @foreach (var item in ViewBag.OnePageOfTasks)
+        {
+            <div class="col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    @*<img src="..." alt="...">*@
+                    <div class="caption">
+                        <h3>@item.BookTitle</h3>
+                        <p>售价：@item.UnitPrice</p>
+                        <p><a href="/ClientHome/DetailAsync?bookId=@item.Id" class="btn btn-primary" role="button">查看书籍</a> <a href="#" class="btn btn-default" role="button">订购书籍</a></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+<footer class="navbar-fixed-bottom">
+    <div class="container">
+        <center> @Html.PagedListPager((IPagedList)ViewBag.OnePageOfTasks, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter, sortOrder = ViewBag.NameSortParm }))
+        </center>
+    </div>
+</footer>
+

@@ -1,0 +1,39 @@
+﻿@using MyTextBook.Web.Models.Common.Modals
+@using Abp.Authorization.Users
+@model MyTextBook.Web.Models.CourseTypes.EditCourseTypeModalViewModel
+@{
+    Layout = null;
+}
+@Html.Partial("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel("课程类别编辑"))
+<div class="modal-body">
+    <form name="CourseTypeEditForm" role="form" novalidate class="form-validation">
+        <input type="hidden" name="Id" value="@Model.CourseType.Id" />
+        <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#edit-book-details" data-toggle="tab">课程类别编辑</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane animated fadeIn active" id="edit-bookType-details">
+                <div class="row clearfix">
+                    <div class="col-sm-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="CourseTypeName" value="@Model.CourseType.CourseTypeName" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">CourseTypeName</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="Description" value="@Model.CourseType.Description" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                <label class="form-label">Description</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </form>
+</div>
+@Html.Partial("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+<script src="~/view-resources/Views/CourseTypes/_EditCourseTypeModal.js" asp-append-version="true"></script>

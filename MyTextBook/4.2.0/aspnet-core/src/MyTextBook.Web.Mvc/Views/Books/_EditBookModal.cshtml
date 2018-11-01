@@ -1,0 +1,122 @@
+﻿@using MyTextBook.Web.Models.Common.Modals
+@using Abp.Authorization.Users
+@model MyTextBook.Web.Models.Books.EditBookModalViewModel
+@{
+    Layout = null;
+}
+@Html.Partial("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditUser")))
+<div class="modal-body">
+    <form name="BookEditForm" role="form" novalidate class="form-validation">
+        <input type="hidden" name="Id" value="@Model.Book.Id" />
+        <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#edit-book-details" data-toggle="tab">书籍编辑</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane animated fadeIn active" id="edit-bookType-details">
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="ISBN" value="@Model.Book.ISBN" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">ISBN</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="BookTitle" value="@Model.Book.BookTitle" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                <label class="form-label">书名</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="BookAuthor" value="@Model.Book.BookAuthor" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">作者</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="BookPublisher" value="@Model.Book.BookPublisher" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                <label class="form-label">出版社</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">                                
+                                <input type="text" name="PublicationDate" value="@Model.Book.PublicationDate" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">出版日期)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="number" value="@Model.Book.UnitPrice" name="UnitPrice"  class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                <label class="form-label">售价</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="Awards" value="@Model.Book.Awards" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">获奖情况</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-12">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="BookDescription" value="@Model.Book.BookDescription" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">描述</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label>图书分类</label>
+                                    <select id="EditSeleBookType" name="BookTypeId" size="1" class="form-control">
+                                        <option value="0">-请选择-</option>
+                                        @foreach (var bookType in Model.BookTypeList)
+                                        {
+                                            if (bookType.Id == Model.Book.BookTypeId)
+                                            {
+                                                <option value="@bookType.Id" selected="selected">@bookType.BookTypeName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@bookType.Id">@bookType.BookTypeName</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br />
+                                </div>
+                                <span style="color:red" id="Edithao"></span>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+@Html.Partial("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+<script src="~/view-resources/Views/Books/_EditBookModal.js" asp-append-version="true"></script>

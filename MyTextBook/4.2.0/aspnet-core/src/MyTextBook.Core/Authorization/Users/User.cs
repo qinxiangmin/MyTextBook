@@ -1,0 +1,38 @@
+﻿using System;
+using Abp.Authorization.Users;
+using Abp.Extensions;
+using MyTextBook.Entitys.Majors;
+using MyTextBook.Entitys.StudentClassTeacheres;
+
+namespace MyTextBook.Authorization.Users
+{
+    public class User : AbpUser<User>
+    {
+        public const string DefaultPassword = "123qwe";
+
+        public static string CreateRandomPassword()
+        {
+            return Guid.NewGuid().ToString("N").Truncate(16);
+        }
+
+        public static User CreateTenantAdminUser(int tenantId, string emailAddress)
+        {
+            var user = new User
+            {
+                TenantId = tenantId,
+                UserName = AdminUserName,
+                Name = AdminUserName,
+                Surname = AdminUserName,
+                EmailAddress = emailAddress
+            };
+
+            user.SetNormalizedNames();
+
+            return user;
+        }
+        public string HeadPortrait { get; set; } //用户头像
+        public string WorkNumber { get; set; }//学工号
+        public string Sex { get; set; }        
+        public StudentClassTeacher StudentClassTeacher { get; set; }       
+    }
+}

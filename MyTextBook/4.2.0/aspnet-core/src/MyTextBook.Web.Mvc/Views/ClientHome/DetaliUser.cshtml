@@ -1,0 +1,89 @@
+﻿@model MyTextBook.Web.Models.Users.UserDetaliModelView
+@{
+    ViewData["Title"] = "DetaliUser";
+}
+
+
+<div class="row">
+    <div class="col-md-2 col-sm-12">
+
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <ul class="list-group">
+
+            <li class="list-group-item">登陆名：@Model.User.Surname</li>
+            <li class="list-group-item">姓名：@Model.User.Name</li>
+            <li class="list-group-item">性别：@Model.User.Sex</li>
+            <li class="list-group-item">电话：@Model.User.PhoneNumber</li>
+            <li class="list-group-item">邮件：@Model.User.EmailAddress</li>
+            <li class="list-group-item">
+                头像：
+                <img src="@Model.User.HeadPortrait" style="width:100px;" />
+
+            </li>
+            <li class="list-group-item">学工号：@Model.User.WorkNumber</li>
+            <li class="list-group-item">上次登陆时间：</li>
+            <li class="list-group-item">个人签名：</li>
+        </ul>
+
+        <input type="button" class="btn btn-primary" data-toggle="modal" data-target="#UserEditModal" value="修改信息" />
+    </div>
+
+ 
+</div>
+
+<div class="modal fade" id="UserEditModal" tabindex="-1" role="dialog" aria-labelledby="UserEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <form name="UserEditForm" action="/ClientHome/TeacherUpdate" role="form" novalidate class="form-validation">
+            <div class="modal-dialog">
+
+            </div><!-- /.modal-dialog -->
+            <div class="modal-content">
+                <input type="hidden" name="Id" value="@Model.User.Id"/>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                        X
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        修改个人信息
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Surname">Surname</label>
+                        <input type="text" value="@Model.User.Surname" name="Surname" class="form-control" id="Surname">
+                    </div>
+                    <div class="form-group">
+                        <label for="Surname">Name</label>
+                        <input type="text" value="@Model.User.Name" name="Name" class="form-control" id="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="Surname">Sex</label>
+                        <input type="text" value="@Model.User.Sex" name="Sex" class="form-control" id="Sex">
+                    </div>
+                    <div class="form-group">
+                        <label for="Surname">PhoneNumber</label>
+                        <input type="text" value="@Model.User.PhoneNumber" name="PhoneNumber" class="form-control" id="PhoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="Surname">EmailAddress</label>
+                        <input type="text" value="@Model.User.EmailAddress" name="EmailAddress" class="form-control" id="EmailAddress">
+                    </div>
+                    <div class="form-group">
+                        <label for="Surname">WorkNumber</label>
+                        <input type="text" value="@Model.User.WorkNumber" name="WorkNumber" class="form-control" id="WorkNumber">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">
+                        关闭
+                    </button>
+                    <input type="submit" class="btn btn-primary save-button" value="修改信息" />
+
+                </div>
+            </div><!-- /.modal-content -->
+        </form>
+    </div>
+</div>

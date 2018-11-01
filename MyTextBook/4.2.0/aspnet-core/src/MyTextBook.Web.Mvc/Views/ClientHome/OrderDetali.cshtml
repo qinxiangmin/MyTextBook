@@ -1,0 +1,35 @@
+﻿@model MyTextBook.Web.Models.ClientHome.OrderDetaliViewModel
+@{
+    ViewData["Title"] = "OrderDetali";
+}
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">详细</div>
+    <div class="panel-body">
+        
+    </div>
+
+    <!-- List group -->
+    <ul class="list-group">
+        <li class="list-group-item">课程：@Model.orderDetaliOutput.CourseCourseName</li>
+        <li class="list-group-item">ISBN：@Model.orderDetaliOutput.BookISBN</li>
+        <li class="list-group-item">书名：@Model.orderDetaliOutput.BookBookTitle</li>
+        <li class="list-group-item">订书人：@Model.orderDetaliOutput.Customer</li>
+        <li class="list-group-item">数量： @Model.orderDetaliOutput.Quantity</li>
+        <li class="list-group-item">订书班级：@Model.orderDetaliOutput.StudentClassStudentClassName</li>
+        <li class="list-group-item">学年：@Model.orderDetaliOutput.AcademicYear</li>
+        <li class="list-group-item">学期：@Model.orderDetaliOutput.Semester</li>
+        <li class="list-group-item">订书时间：@Model.orderDetaliOutput.OrderDate</li>
+        <li class="list-group-item">
+            @{
+                var state = "待审核";
+                if (Model.orderDetaliOutput.OrderState == "2")
+                {
+                    state = "可领书";
+                }
+            }           
+            状态：@state
+        </li>
+    </ul>
+</div>

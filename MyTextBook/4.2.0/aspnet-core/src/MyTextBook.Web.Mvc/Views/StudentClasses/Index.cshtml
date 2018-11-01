@@ -1,0 +1,179 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using MyTextBook.Web.Startup
+@using Abp.Authorization.Users
+@model MyTextBook.Web.Models.Majors.MajorViewModel
+@{
+    // ViewData["Title"] = "Index";
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/StudentClasses/Index.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/StudentClasses/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<h4>班级列表</h4>
+<div class="row">
+    <div class="col-md-4 col-sm-12">
+        @Html.ActionLink("班级降序", "Index", new { sortOrder = "Desc", currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-default glyphicon glyphicon-arrow-down" })
+        @Html.ActionLink("班级升序", "Index", new { sortOrder = "Asc", currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-default glyphicon glyphicon-arrow-up" })
+    </div>
+    <div class="col-md-8 col-sm-12">
+        @using (Html.BeginForm("Index", "StudentClasses", FormMethod.Get))
+        {
+            <div class="input-group">
+                <input type="text" name="SeachText" class="form-control" value="@ViewBag.CurrentFilter" placeholder="输入班名">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        搜索班级名称
+                    </button>
+                </span>
+            </div><!-- /input-group -->
+            
+        }
+    </div>   
+</div>
+
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                   班级
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>年级</th>
+                            <th>班名</th>
+                            <th>专业</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.OnePageOfTasks)
+                        {
+                            <tr>
+                                <td>@item.GradeName</td>
+                                <td>@item.StudentClassName</td>
+                                <td>@item.MajorMajorName</td>
+                                <td class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">menu</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="#" class="waves-effect waves-block edit-studentClass" data-studentClass-id="@item.Id" data-toggle="modal" data-target="#StudentClassEditModal"><i class="material-icons">edit</i>@L("Edit")</a></li>
+                                        <li><a href="#" class="waves-effect waves-block delete-studentClass" data-studentClass-id="@item.Id" data-studentClass-name="@item.StudentClassName"><i class="material-icons">delete_sweep</i>@L("Delete")</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" data-toggle="modal" data-target="#StudentClassCreateModal">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="navbar-fixed-bottom">
+    <div class="container">
+        <center>
+            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfTasks, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter, sortOrder = ViewBag.NameSortParm }))
+        </center>
+    </div>
+</footer>
+
+<div class="modal fade" id="StudentClassCreateModal" tabindex="-1" role="dialog" aria-labelledby="StudentClassCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>添加新班级</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="studentClassCreateForm" role="form" novalidate class="form-validation">
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#create-studentClass-details" data-toggle="tab">填写班级信息</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="create-studentClass-details">
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <label>年级</label>
+                                            <select id="createSeleGrade" name="GradeName" size="1" class="form-control">
+                                                <option value="0">-请选择-</option>
+                                                <option value="16">-16-</option>
+                                                <option value="17">-17-</option>
+                                                <option value="18">-18-</option>
+                                            </select>
+                                            <span style="color:red" id="hao1"></span>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="StudentClassName" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                            <label class="form-label">StudentClassName</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <label>所属专业</label>
+                                            <select id="createSeleMajor" name="MajorId" size="1" class="form-control">
+                                                <option value="0">-请选择-</option>
+                                                @foreach (var major in Model.MajorList)
+                                                {
+                                                    <option value="@major.Id">@major.MajorName</option>
+                                                }
+                                            </select>
+                                            <br />
+                                        </div>
+                                        <span style="color:red" id="hao"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                        <button type="submit" class="btn btn-primary waves-effect">@L("Save")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="StudentClassEditModal" tabindex="-1" role="dialog" aria-labelledby="BookEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+
+</div>

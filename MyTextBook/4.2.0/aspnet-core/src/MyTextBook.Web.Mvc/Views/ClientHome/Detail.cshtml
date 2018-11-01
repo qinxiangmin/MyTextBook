@@ -1,0 +1,114 @@
+﻿@using Abp.Authorization.Users
+@model MyTextBook.Web.Models.ClientHome.DetailBookViewModel
+@{
+    ViewData["Title"] = "Detail";
+}
+<script src="~/view-resources/Views/ClientHome/insertOrder.js"></script>
+
+<div class="panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">图书详细信息</div>
+    <div class="panel-body">
+        <p></p>
+    </div>
+
+    <!-- List group -->
+    <div class="row">
+        <ul class="list-group col-md-6 col-sm-12">
+            <li class="list-group-item">ISBN：@Model.Book.ISBN</li>
+            <li class="list-group-item">书名：@Model.Book.BookTitle</li>
+            <li class="list-group-item">出版社：@Model.Book.BookPublisher</li>
+            <li class="list-group-item">售价：@Model.Book.UnitPrice</li>
+            <li class="list-group-item">作者：@Model.Book.BookAuthor</li>
+            <li class="list-group-item">获奖情况：@Model.Book.Awards</li>
+            <li class="list-group-item">说明：@Model.Book.BookDescription</li>
+            <li class="list-group-item">分类：@Model.Book.BookTypeBookTypeName</li>
+        </ul>
+        <div class="col-md-6 col-sm-12">
+            <img src="~/images/timg.jpg" />
+        </div>
+    </div>
+    @*<p><a href="#" class="btn btn-primary " data-target="#BookEditModal" role="button">订购书籍</a></p>*@
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        订购书籍
+    </button>
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <form asp-action="Create">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">
+                        X
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        填写购书订单
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" value="@Model.Book.Id" name="BookId" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="StudentClassId" class="control-label">订购班级</label>
+                        <select id="StudentClassId" name="StudentClassId" class="form-control" asp-items="ViewBag.StudentClassList"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="CourseId" class="control-label">选择课程</label>
+                        <select id="CourseId" name="CourseId" class="form-control" asp-items="ViewBag.CourseList"></select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ISBN">ISBN:</label>
+                        <input type="text" value="@Model.Book.ISBN" class="form-control" id="ISBN">
+                    </div>
+                    <div class="form-group">
+                        <label for="Quantity">数量:(本)</label>
+                        <input type="number" name="Quantity" class="form-control" id="Quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="usr">订购人:</label>
+                        <input type="text" class="form-control" id="usr" name="Customer">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="AreaId">学年:</label>
+                        <select id="AreaId" name="AcademicYear" size="1" class="form-control">
+                            <option>-请选择-</option>
+                            <option value="2016">-2016年-</option>
+                            <option value="2017">-2017年-</option>
+                            <option value="2018">-2018年-</option>
+                            <option value="2019">-2019年-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="AreaId">学期:</label>
+                        <select id="AreaId" name="Semester" size="1" class="form-control">
+                            <option>-请选择-</option>
+                            <option value="1">春季学期</option>
+                            <option value="2">秋季学期</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="usr">描述:</label>
+                        <input type="text" class="form-control" id="usr" name="Description">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">
+                        关闭
+                    </button>
+                    <input type="submit" class="btn btn-primary" value="提交订单" />
+                   
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </form>
+
+</div><!-- /.modal -->

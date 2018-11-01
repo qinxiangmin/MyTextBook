@@ -1,0 +1,121 @@
+﻿@using Abp.Authorization.Users
+@using MyTextBook.Web.Startup
+@model MyTextBook.Web.Models.CourseTypes.CourseTypeListViewModel
+@{
+    ViewBag.CurrentPageName = PageNames.Users; // The menu item will be active for this page.
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/CourseTypes/Index.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/CourseTypes/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    课程分类
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>课程类别名称</th>
+                            <th>描述</th>
+
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var coursetype in Model.CourseList)
+                        {
+                            <tr>
+                                <td>@coursetype.CourseTypeName</td>
+                                <td>@coursetype.Description</td>
+                                <td class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">menu</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="#" class="waves-effect waves-block edit-courseType" data-courseType-id="@coursetype.Id" data-toggle="modal" data-target="#CourseTypeEditModal"><i class="material-icons">edit</i>@L("Edit")</a></li>
+                                        <li><a href="#" class="waves-effect waves-block delete-courseType" data-courseType-id="@coursetype.Id" data-courseType-name="@coursetype.CourseTypeName"><i class="material-icons">delete_sweep</i>@L("Delete")</a></li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" data-toggle="modal" data-target="#CourseTypeCreateModal">
+                    <i class="material-icons">add</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="CourseTypeCreateModal" tabindex="-1" role="dialog" aria-labelledby="CourseTypeCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>添加新分类</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="courseTypeCreateForm" role="form" novalidate class="form-validation">
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#create-courseType-details" data-toggle="tab">填写课程分类信息</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="create-courseType-details">
+                            <div class="row clearfix" style="margin-top:10px;">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input class="form-control" type="text" name="CourseTypeName" required maxlength="@AbpUserBase.MaxUserNameLength" minlength="2">
+                                            <label class="form-label">分类名称</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="Description" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                            <label class="form-label">分类描述</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                        <button type="submit" class="btn btn-primary waves-effect">@L("Save")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="CourseTypeEditModal" tabindex="-1" role="dialog" aria-labelledby="CourseTypeEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

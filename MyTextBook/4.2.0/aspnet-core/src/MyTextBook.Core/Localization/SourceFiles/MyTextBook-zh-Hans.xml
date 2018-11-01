@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="zh-Hans">
+  <texts>
+    
+    <text name="Red">红色</text>
+    <text name="Pink">粉色</text>
+    <text name="Purple">紫色</text>
+    <text name="DeepPurple">深紫色</text>
+    <text name="Indigo">靛色</text>
+    <text name="Blue">蓝色</text>
+    <text name="LightBlue">浅蓝色</text>
+    <text name="Cyan">青色</text>
+    <text name="Teal">蒂尔色</text>
+    <text name="Green">绿色</text>
+    <text name="LightGreen">浅绿色</text>
+    <text name="Lime">酸橙色</text>
+    <text name="Yellow">黄色</text>
+    <text name="Amber">琥珀色</text>
+    <text name="Orange">橙色</text>
+    <text name="DeepOrange">深橙色</text>
+    <text name="Brown">棕色</text>
+    <text name="Grey">灰色</text>
+    <text name="BlueGrey">蓝灰色</text>
+
+    <text name="StudentBookDetailses">学生用书详情</text>
+    <text name="MyInfo">个人信息</text>
+    <text name="Orders">订单管理</text>
+    <text name="CourseType">课程分类</text>
+    <text name="BookType">书籍分类</text>
+    <text name="Book">书籍</text>
+    <text name="Department">部门管理</text>
+    <text name="Major">专业管理</text>
+    <text name="StudentClass">班级管理</text>
+    <text name="AcademicYear">学年管理</text>
+    <text name="Course">课程管理</text>
+    <text name="Student">学生管理</text>
+    <text name="MultiLevelMenu">系统管理</text>
+    <text name="Actions">操作</text>
+    <text name="IsActive" value="是否活动" />
+    <text name="EmailAddress" value="邮箱地址" />
+    <text name="FullName" value="名称" />
+    <text name="UserName" value="姓氏" />
+    <text name="Tenants" value="租户" />
+    <text name="Roles">角色</text>
+    <text name="TextBook">教材管理系统</text>
+    <text name="Users" value="用户" />
+    <text name="Logout">注销</text>
+    <text name="Version">版本</text>
+    <text name="HomePage" value="主页" />
+    <text name="About" value="关于我们" />
+    <text name="WellcomeMessage" value="欢迎使用 MyTextBook!" />
+    
+    <text name="FormIsNotValidMessage" value="部分输入信息不符合要求，请检查并改正.." />
+    <text name="TenantNameCanNotBeEmpty" value="租户名不能为空" />
+
+    <text name="InvalidUserNameOrPassword" value="用户名或密码无效" />
+    <text name="ThereIsNoTenantDefinedWithName{0}" value="租户 {0}不存在" />
+    <text name="TenantIsNotActive" value="租户 {0} 未激活." />
+    <text name="UserIsNotActiveAndCanNotLogin" value="用户 {0} 未激活，不能登录." />
+    <text name="PleaseEnterLoginInformation" value="请输入登录信息" />
+    <text name="TenancyName" value="租户名称" />
+    <text name="UserNameOrEmail" value="用户名或邮箱地址" />
+    <text name="Password" value="密码" />
+    <text name="RememberMe" value="记住我" />
+    <text name="LogIn" value="登录" />
+    
+    <text name="LoginFailed" value="登录失败!" />
+    
+  </texts>
+</localizationDictionary>

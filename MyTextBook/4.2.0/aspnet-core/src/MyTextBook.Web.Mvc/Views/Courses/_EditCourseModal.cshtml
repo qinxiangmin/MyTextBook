@@ -1,0 +1,66 @@
+﻿@using MyTextBook.Web.Models.Common.Modals
+@using Abp.Authorization.Users
+@model MyTextBook.Web.Models.Courses.EditCourseModalViewModel
+@{
+    Layout = null;
+}
+@Html.Partial("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditUser")))
+<div class="modal-body">
+    <form name="CourseEditForm" role="form" novalidate class="form-validation">
+        <input type="hidden" name="Id" value="@Model.Course.Id" />
+        <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#edit-course-details" data-toggle="tab">书籍编辑</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane animated fadeIn active" id="edit-courseType-details">
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="CourseNumber" value="@Model.Course.CourseNumber" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">CourseNumber</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="CourseName" value="@Model.Course.CourseName" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                <label class="form-label">CourseName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                             
+                <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <select id="EditSeleCourseType" name="CourseTypeId" size="1" class="form-control">
+                                        <option value="0">-请选择-</option>
+                                        @foreach (var courseType in Model.CourseTypeList)
+                                        {
+                                            if (courseType.Id == Model.Course.CourseTypeId)
+                                            {
+                                                <option value="@courseType.Id" selected="selected">@courseType.CourseTypeName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@courseType.Id">@courseType.CourseTypeName</option>
+                                            }
+                                        }
+                                    </select>
+
+                                    <label class="form-label">课程分类</label>
+                                    <br />
+                                </div>
+                                <span style="color:red" id="Edithao"></span>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+@Html.Partial("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+<script src="~/view-resources/Views/Courses/_EditCourseModal.js" asp-append-version="true"></script>

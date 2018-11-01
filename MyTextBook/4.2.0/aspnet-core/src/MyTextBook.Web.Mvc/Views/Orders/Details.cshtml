@@ -1,0 +1,172 @@
+﻿@model MyTextBook.Web.Models.Orders.OrderDetaliViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="~/js/vue.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+    });
+</script>
+<h4>订单详细</h4>
+
+<div class="row">
+    <ul class="list-group col-md-6 col-sm-12">
+        <li class="list-group-item">课程：@Model.orderDetaliOutput.CourseCourseName</li>
+        <li class="list-group-item">ISBN：@Model.orderDetaliOutput.BookISBN</li>
+        <li class="list-group-item">书名：@Model.orderDetaliOutput.BookBookTitle</li>
+        <li class="list-group-item">码详：@Model.orderDetaliOutput.BookUnitPrice</li>
+        <li class="list-group-item">订书人：@Model.orderDetaliOutput.Customer</li>
+        <li class="list-group-item">数量： @Model.orderDetaliOutput.Quantity</li>
+        <li class="list-group-item">订书班级：@Model.orderDetaliOutput.StudentClassStudentClassName</li>
+        <li class="list-group-item">学年：@Model.orderDetaliOutput.AcademicYear</li>
+        <li class="list-group-item">
+            学期：
+            @{
+                var semester = "春";
+                if (Model.orderDetaliOutput.Semester == "1")
+                {
+                    semester = "秋";
+                }
+            }
+            @semester 季
+
+        </li>
+        <li class="list-group-item">订书时间：@Model.orderDetaliOutput.OrderDate</li>
+        <li class="list-group-item">
+           
+            @{
+                var state = "待审核";
+                if (Model.orderDetaliOutput.OrderState == "2")
+                {
+                    state = "可领书";
+                }
+            }
+            状态：@state
+           
+        </li>
+    </ul>
+    <div class="col-md-6 col-sm-12">
+        <img src="~/images/timg.jpg" />
+    </div>
+</div>
+<div id="StudentBookCreateModal">
+    <form name="studentBookCreateForm" role="form" novalidate class="form-validation">
+        <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#create-book-details" data-toggle="tab">@Model.orderDetaliOutput.StudentClassStudentClassName 学生名单</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane animated fadeIn active" id="create-book-details">
+
+                <input type="hidden" value="@Model.orderDetaliOutput.BookId" name="BookId" />
+                <input type="hidden" value="@Model.orderDetaliOutput.CourseId" name="CourseId" />
+                <input type="hidden" value="@Model.orderDetaliOutput.AcademicYear" name="AcademicYear" />
+                <input type="hidden" value="@Model.orderDetaliOutput.Semester" name="Semester" />
+                <input type="hidden" value="@Model.orderDetaliOutput.Id" name="OrderId" />
+                <div class="col-sm-12" id="app">
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <p>
+                                                <input type="checkbox" onclick="checkAll()" name="checkBtn" id="Btn1" />
+                                                <label for="Btn1">全选</label>
+                                            </p>
+                                        </th>
+                                        <th>学号</th>
+                                        <th>姓名</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var studenList in Model.studenList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <p>
+                                                    <input type="checkbox" value="@studenList.Id" name="student" id="@studenList.Id" />
+                                                    <label for="@studenList.Id"></label>
+                                                </p>
+                                            </td>
+                                            <td>@studenList.StudentNum</td>
+                                            <td>@studenList.StudentName</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="BookCreateModal" tabindex="-1" role="dialog" aria-labelledby="BookCreateModalLabel" data-backdrop="static">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            <span>售价信息</span>
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group col-md-12 col-sm-12">
+                            <li class="list-group-item">ISBN：@Model.orderDetaliOutput.BookISBN</li>
+                            <li class="list-group-item">书名：@Model.orderDetaliOutput.BookBookTitle</li>
+                            <li class="list-group-item">订书人：@Model.orderDetaliOutput.Customer</li>
+                            <li class="list-group-item">码详：@Model.orderDetaliOutput.BookUnitPrice</li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane animated fadeIn active" id="create-book-details">
+                                <div class="row clearfix">
+                                    <div class="col-sm-12">
+                                        <div class="form-group form-float">
+                                            <div class="form-line">
+                                                <input type="number" name="UnitPrice" class="form-control" required>
+                                                <label class="form-label">实详(元)/(本)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                            <button type="submit" id="fashu" class="btn btn-primary waves-effect">确认发书</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<button type="button" data-toggle="modal" data-target="#BookCreateModal" class="btn btn-primary btn-lg">
+    书籍发放
+</button>
+
+<script src="~/view-resources/Views/Orders/Index.js"></script>
+
+<script type="text/javascript">
+
+    function checkAll() {
+
+        var btn = document.getElementById('Btn1');
+        var check = document.getElementsByName("student");
+        if (btn.name == 'checkBtn') {
+            for (var i = 0; i < check.length; i++) {
+                check[i].checked = true;
+            }
+            btn.name = 'NocheckBtn';
+        } else {
+            for (var i = 0; i < check.length; i++) {
+                check[i].checked = false;
+            }
+            btn.name = 'checkBtn';
+        }
+    };
+
+</script>

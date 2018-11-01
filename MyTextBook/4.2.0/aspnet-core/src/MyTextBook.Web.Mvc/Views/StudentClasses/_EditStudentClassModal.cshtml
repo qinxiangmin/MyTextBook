@@ -1,0 +1,65 @@
+﻿@using MyTextBook.Web.Models.Common.Modals
+@using Abp.Authorization.Users
+@model MyTextBook.Web.Models.StudentClasses.EditStudentClassModalViewModel
+@{
+    Layout = null;
+}
+@Html.Partial("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditUser")))
+<div class="modal-body">
+    <form name="StudentClassEditForm" role="form" novalidate class="form-validation">
+        <input type="hidden" name="Id" value="@Model.StudentClassList.Id" />
+        <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#edit-course-details" data-toggle="tab">班级编辑</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane animated fadeIn active" id="edit-studentClass-details">
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="GradeName" value="@Model.StudentClassList.GradeName" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">GradeName</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="StudentClassName" value="@Model.StudentClassList.StudentClassName" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                <label class="form-label">StudentClassName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                             
+                <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group form-float">
+                                <div class="form-line">
+                                    <label>专业</label>
+                                    <select id="EditSeleMajor" name="MajorId" size="1" class="form-control">                                        
+                                        <option value="0">-请选择-</option>
+                                        @foreach (var major in Model.Major)
+                                        {
+                                            if (major.Id == Model.StudentClassList.MajorId)
+                                            {
+                                                <option value="@major.Id" selected="selected">@major.MajorName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@major.Id">@major.MajorName</option>
+                                            }
+                                        }
+                                    </select>                                   
+                                    <span style="color:red" id="Edithao"></span>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+@Html.Partial("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+<script src="~/view-resources/Views/StudentClasses/_EditStudentClassModal.js" asp-append-version="true"></script>

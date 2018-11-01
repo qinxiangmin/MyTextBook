@@ -1,0 +1,125 @@
+﻿@model MyTextBook.Web.Models.Users.UserDetaliModelView
+@{
+    ViewData["Title"] = "DetaliUser";
+}
+
+
+<div class="row">
+    <div class="col-md-2 col-sm-12">
+
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <ul class="list-group">
+
+            <li class="list-group-item">登陆名：@Model.User.Surname</li>
+            <li class="list-group-item">姓名：@Model.User.Name</li>
+            <li class="list-group-item">性别：@Model.User.Sex</li>
+            <li class="list-group-item">电话：@Model.User.PhoneNumber</li>
+            <li class="list-group-item">邮件：@Model.User.EmailAddress</li>
+            <li class="list-group-item">
+                头像：
+                <img src="@Model.User.HeadPortrait" style="width:100px;" />
+
+            </li>
+            <li class="list-group-item">学工号：@Model.User.WorkNumber</li>
+            <li class="list-group-item">上次登陆时间：</li>
+            <li class="list-group-item">个人签名：</li>
+        </ul>
+
+        <input type="button" class="btn btn-primary" value="修改信息" />
+    </div>
+</div>
+
+
+<div class="modal fade" id="UserEditModal1" tabindex="-1" role="dialog" aria-labelledby="UserEditModalLabel1" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+         
+            <div class="modal-body">
+                <form name="UserEditForm1" role="form" novalidate class="form-validation">
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#create-bookType-details" data-toggle="tab">修改个人信息</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="create-bookType-details">
+                            <div class="row clearfix" style="margin-top:10px;">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input class="form-control" type="text" value="@Model.User.Surname" name="Surname" required minlength="2">
+                                            <label class="form-label">Surname</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="Name" value="@Model.User.Name" class="form-control" required>
+                                            <label class="form-label">Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="Sex" value="@Model.User.Sex" class="form-control" required>
+                                            <label class="form-label">Sex</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="PhoneNumber" value="@Model.User.PhoneNumber" class="form-control" required>
+                                            <label class="form-label">PhoneNumber</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="EmailAddress" value="@Model.User.EmailAddress" class="form-control" required>
+                                            <label class="form-label">EmailAddress</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="HeadPortrait" value="@Model.User.HeadPortrait" class="form-control" required>
+                                            <label class="form-label">HeadPortrait</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" value="@Model.User.WorkNumber" name="HeadPortrait" class="form-control" required>
+                                            <label class="form-label">WorkNumber</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                        <button type="submit" class="btn btn-primary waves-effect">@L("Save")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

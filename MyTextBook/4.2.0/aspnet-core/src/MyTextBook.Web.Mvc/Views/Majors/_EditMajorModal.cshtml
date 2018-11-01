@@ -1,0 +1,67 @@
+﻿@using MyTextBook.Web.Models.Common.Modals
+@using Abp.Authorization.Users
+@model MyTextBook.Web.Models.Majors.EditMajorModalViewModel
+@{
+    Layout = null;
+}
+@Html.Partial("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("EditUser")))
+<div class="modal-body">
+    <form name="MajorEditForm" role="form" novalidate class="form-validation">
+        <input type="hidden" name="Id" value="@Model.Major.Id" />
+        <ul class="nav nav-tabs tab-nav-right" role="tablist">
+            <li role="presentation" class="active"><a href="#edit-major-details" data-toggle="tab">专业编辑</a></li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane animated fadeIn active" id="edit-major-details">
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="MajorName" value="@Model.Major.MajorName" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                <label class="form-label">MajorName</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <input type="text" name="LeaderName" value="@Model.Major.LeaderName" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                <label class="form-label">LeaderName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label>所属部门</label>
+                                <select id="EditSeleTDepartment" name="TDepartmentId" size="1" class="form-control">
+                                    <option value="0">-请选择-</option>
+                                    @foreach (var tDepartment in Model.TDepartmentList)
+                                    {
+                                        if (tDepartment.Id == Model.Major.TDepartmentId)
+                                        {
+                                            <option value="@tDepartment.Id" selected="selected">@tDepartment.TDepartmentName</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@tDepartment.Id">@tDepartment.TDepartmentName</option>
+                                        }
+
+                                    }
+
+                                </select>
+                                <br />
+                            </div>
+                            <span style="color:red" id="Edithao"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+@Html.Partial("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+<script src="~/view-resources/Views/Majors/_EditMajorModal.js" asp-append-version="true"></script>

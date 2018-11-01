@@ -1,0 +1,50 @@
+﻿@model MyTextBook.Web.Models.Orders.OrderListViewModel
+@{
+    ViewData["Title"] = "MyOrderList";
+}
+
+<div class="bs-example" data-example-id="panel-without-body-with-table">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">我的订单列表</div>
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>图书</th>
+                    <th>班级</th>
+                    <th>状态</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model._orderList)
+                {
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@item.BookBookTitle</td>
+                    <td>@item.StudentClassStudentClassName</td>
+                    <td>
+                        @{ 
+                            var state = "待审核";
+                            if (item.OrderState == "1")
+                            {
+                                state = "可领书";
+                            }
+                        }
+                           @state                
+                    </td>
+                    <td>@item.OrderDate</td>
+                    <td>
+                        <a href="/ClientHome/OrderDetali/@item.Id" class="btn btn-default">查看</a>
+                    </td>
+                </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>

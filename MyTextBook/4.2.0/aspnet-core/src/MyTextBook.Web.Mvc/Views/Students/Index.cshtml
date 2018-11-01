@@ -1,0 +1,192 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using MyTextBook.Web.Startup
+@using Abp.Authorization.Users
+@model MyTextBook.Web.Models.Students.StucentListViewModel
+@{
+    // ViewData["Title"] = "Index";
+}
+@section scripts
+    {
+    <environment names="Development">
+        <script src="~/view-resources/Views/Students/Index.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/Students/Index.min.js" asp-append-version="true"></script>
+    </environment>
+}
+    <h4>学生列表</h4>
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <p>
+               
+                @Html.ActionLink("学生名字降序", "Index", new { sortOrder = "Desc", currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-default glyphicon glyphicon-arrow-down" })
+                @Html.ActionLink("学生名字升序", "Index", new { sortOrder = "Asc", currentFilter = ViewBag.CurrentFilter }, new { @class = "btn btn-default glyphicon glyphicon-arrow-up" })
+            </p>
+        </div>
+        <div class="col-md-8 col-sm-12">
+            @using (Html.BeginForm("Index", "Students", FormMethod.Get))
+            {
+                <div class="input-group">
+                    <input type="text" name="SeachText" class="form-control" value="@ViewBag.CurrentFilter" placeholder="输入姓名">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                           搜索
+                        </button>
+                    </span>
+                </div><!-- /input-group -->
+            }
+        </div>
+    </div>
+
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>
+                        学生管理
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li><a id="RefreshButton" href="javascript:void(0);" class="waves-effect waves-block"><i class="material-icons">refresh</i>@L("Refresh")</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>班级</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.OnePageOfTasks)
+                            {
+                                <tr>
+                                    <td>@item.StudentNum</td>
+                                    <td>@item.StudentName</td>
+                                    <td>@item.StudentSex</td>
+                                    <td>@item.StudentClassStudentClassName</td>
+
+                                    <td class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                            <i class="material-icons">menu</i>
+                                        </a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li><a href="#" class="waves-effect waves-block edit-student" data-student-id="@item.Id" data-toggle="modal" data-target="#StudentEditModal"><i class="material-icons">edit</i>@L("Edit")</a></li>
+                                            <li><a href="#" class="waves-effect waves-block delete-student" data-student-id="@item.Id" data-student-name="@item.StudentName"><i class="material-icons">delete_sweep</i>@L("Delete")</a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <button type="button" class="btn btn-primary btn-circle waves-effect waves-circle waves-float pull-right" data-toggle="modal" data-target="#StudentCreateModal">
+                        <i class="material-icons">add</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<footer class="navbar-fixed-bottom">
+    <div class="container">
+        <center>
+            @Html.PagedListPager((IPagedList)ViewBag.OnePageOfTasks, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter, sortOrder = ViewBag.NameSortParm }))
+        </center>
+    </div>
+</footer>
+<div class="modal fade" id="StudentCreateModal" tabindex="-1" role="dialog" aria-labelledby="StudentCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>添加新学生</span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form name="studentCreateForm" role="form" novalidate class="form-validation">
+                    <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                        <li role="presentation" class="active"><a href="#create-student-details" data-toggle="tab">填写学生信息</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="create-student-details">
+
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="StudentNum" class="form-control" required maxlength="@AbpUserBase.MaxNameLength">
+                                            <label class="form-label">StudentNum</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <input type="text" name="StudentName" class="form-control" required maxlength="@AbpUserBase.MaxSurnameLength">
+                                            <label class="form-label">StudentName</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <label>StudentSex</label>
+                                            <select id="StudentClassId" name="StudentSex" required size="1" class="form-control">
+                                                <option value="男">-男-</option>
+                                                <option value="女">-女-</option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-float">
+                                        <div class="form-line">
+                                            <label>班级选择</label>
+                                            <select id="StudentClassId" name="StudentClassId" required size="1" class="form-control">
+                                                <option value="0">-请选择-</option>
+                                                @foreach (var studentClass in Model.StudentClassList)
+                                                {
+                                                    <option value="@studentClass.Id">@studentClass.StudentClassName</option>
+                                                }
+
+                                            </select>
+                                            <br />
+                                        </div>
+                                        <span style="color:red" id="hao"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">@L("Cancel")</button>
+                        <button type="submit" class="btn btn-primary waves-effect">@L("Save")</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="StudentEditModal" tabindex="-1" role="dialog" aria-labelledby="BookEditModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/lib/materialize.min.css" rel="stylesheet" />
+    <link href="~/css/materialize.css" rel="stylesheet" />
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/materialize.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/view-resources/Views/Shared/Components/ajaxfun.js"></script>
+
+
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.jquery.js"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.toastr.js"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.blockUI.js"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.spin.js"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.sweet-alert.js"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/abp.js"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js"></script>
+    <script src="~/lib/abp-web-resources/Abp/Framework/scripts/libs/abp.signalr.js"></script>
+
+
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("教材管理系统", "Index", "ClientHome", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/ClientHome/MyOrderList"><span class="glyphicon glyphicon-tag"></span>我的订单</a></li>
+                    <li><a href=""><span class="glyphicon glyphicon-chevron-down"></span>领书单 </a></li>
+                    <li><a href="/ClientHome/StudentBookDetali"><span class="glyphicon glyphicon-zoom-in"></span>订购查询 </a></li>
+                    <li><a href=""><span class="glyphicon glyphicon-zoom-in"></span>通知</a></li>
+                    <li><a href="/ClientHome/DetaliUser"><span class="glyphicon glyphicon-user"></span>我的 </a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <br />
+        <br />
+        <br />
+        <br />
+
+        @RenderBody()
+        <hr />
+        <footer class=" footer navbar-fixed-bottom">
+            <p>&copy; @DateTime.Now.Year - 教材管理系统</p>
+        </footer>
+    </div>
+</body>
+</html>
+
+
+
+
